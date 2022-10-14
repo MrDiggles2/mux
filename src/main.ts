@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import path from 'path';
 import { MuxUI } from "./ui";
 import { MuxProcess } from './mux-process';
