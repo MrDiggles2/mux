@@ -1,0 +1,20 @@
+{
+  "name": "mux",
+  "version": "0.0.1",
+  "scripts": {
+    "mux": "npx ts-node src/main.ts"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "chalk": "^4.1.0",
+    "tail": "^2.2.4",
+    "terminal-kit": "^3.0.0",
+    "tree-kill": "^1.2.2",
+    "ts-node": "^10.9.1"
+  },
+  "devDependencies": {
+    "@types/tail": "^2.2.1",
+    "@types/terminal-kit": "^2.5.0"
+  }
+}
