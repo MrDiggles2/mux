@@ -1,10 +1,12 @@
 {
   "name": "mux",
-  "version": "0.0.1",
-  "bin": "./dist/main.js",
+  "version": "0.0.2",
+  "bin": "./main.js",
   "scripts": {
     "mux": "ts-node src/main.ts",
-    "build": "tsc"
+    "clean": "rm -rf dist",
+    "prebuild": "npm run clean && tsc && cp package.json LICENSE dist",
+    "build": "cd dist && npm pack --pack-destination=../"
   },
   "author": "",
   "license": "ISC",

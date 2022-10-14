@@ -1,10 +1,11 @@
 #!/usr/bin/env node
 
+import 'ts-node/register';
 import path from 'path';
 import { MuxUI } from "./ui";
-import { MuxProcess } from './mux-process';
+import { MuxProcess } from './process';
 import { terminal } from "terminal-kit";
-import { MuxConfig, MuxLogger } from "./mux.types";
+import { MuxConfig, MuxLogger } from "./config";
 
 const logger: MuxLogger = {
   log: (message: string) => {

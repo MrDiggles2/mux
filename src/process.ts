@@ -3,8 +3,10 @@ import path from "path";
 import fs from 'fs';
 import { Tail } from "tail";
 import treeKill from "tree-kill";
-import { MuxCommand, MuxProcessConfig, MuxLogger, MuxConfig } from "./mux.types";
-
+import { MuxCommand, MuxProcessConfig, MuxLogger, MuxConfig } from "./config";
+export namespace Mux {
+  export const hello = 'foo';
+}
 export class MuxProcess {
   public name: string;
 

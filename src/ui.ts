@@ -1,8 +1,8 @@
 import { performance } from 'perf_hooks';
 import chalk from 'chalk';
 import { Tail } from 'tail';
-import { MuxProcess } from './mux-process';
-import { MuxLogger } from './mux.types';
+import { MuxProcess } from './process';
+import { MuxLogger } from './config';
 
 type DefaultNode = {
   name: string;

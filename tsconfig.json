@@ -2,18 +2,13 @@
   "compilerOptions": {
     "baseUrl": "src",
     "target": "es6",
-    "module": "commonjs",
-    "moduleResolution": "node",
-    "outDir": "./dist",
+    "module": "CommonJS",
+    "moduleResolution": "Node16",
     "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "forceConsistentCasingInFileNames": true,
-    "strict": true,
-    "strictPropertyInitialization": false,
-    "skipLibCheck": true,
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
     "declaration": true,
+    "preserveConstEnums": true,
+    "outDir": "./dist/",
+    "rootDir": "./src/"
   },
   "exclude": [
     "node_modules"
