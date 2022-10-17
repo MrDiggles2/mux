@@ -1,7 +1,9 @@
 {
-  "name": "mux",
+  "name": "@mrdiggles2/mux",
   "version": "0.0.2",
-  "bin": "./main.js",
+  "bin": {
+    "mux": "main.js"
+  },
   "scripts": {
     "start": "DEBUG=1 MUX_DEV_MODE=true ts-node src/main.ts start",
     "clean": "rm -rf dist",
@@ -21,5 +23,14 @@
   "devDependencies": {
     "@types/tail": "^2.2.1",
     "@types/terminal-kit": "^2.5.0"
-  }
+  },
+  "description": "muxer in typescript",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MrDiggles2/mux.git"
+  },
+  "bugs": {
+    "url": "https://github.com/MrDiggles2/mux/issues"
+  },
+  "homepage": "https://github.com/MrDiggles2/mux#readme"
 }
