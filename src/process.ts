@@ -23,10 +23,6 @@ export class MuxProcess {
   }
 
   public async stop(): Promise<void> {
-    if (!this.startPromise) {
-      throw new Error('Not started yet');
-    }
-
     this.logger.info(`${this.name}: cleaning up`);
 
     await this.runCommand(this.processConfig.stop);
@@ -46,7 +42,9 @@ export class MuxProcess {
       }
     }
 
-    await this.startPromise;
+    if (this.startPromise) {
+      await this.startPromise;
+    }
 
     fs.truncateSync(this.getLogPath(), 0);
   }
@@ -97,16 +95,18 @@ export class MuxProcess {
       resolver = resolve
     });
 
-    const envVars = Object.keys(env)
-      .map((key) => `${key}='${env[key]}'`)
-      .join(' ');
     const bin = "sh";
-    const args = ['-c', `'cd ${cwd} && ${envVars} ${exec}'`];
+    const args = ['-c', `'cd ${cwd} && ${exec}'`];
 
     this.logger.info(`${this.name}: Executing "${bin} ${args.join(' ')}"`);
+    this.logger.debug(`${this.name}: Environtment variables: ${JSON.stringify(env)}`)
 
     const child = spawn(bin, args, {
-      shell: true
+      shell: true,
+      env: {
+        ...process.env,
+        ...env
+      },
     });
 
     child.stdout.on('data', (data: Buffer) => {
@@ -116,6 +116,11 @@ export class MuxProcess {
     child.stderr.on('data', (data: Buffer) => {
       fs.appendFileSync(logFile, data);
     });
+
+    child.on('exit', (code) => {
+      fs.appendFileSync(logFile, `exited with code ${code}`);
+      resolver();
+    })
     
     child.on('close', (code) => {
       fs.appendFileSync(logFile, `exited with code ${code}`);

@@ -3,9 +3,9 @@
   "version": "0.0.2",
   "bin": "./main.js",
   "scripts": {
-    "mux": "ts-node src/main.ts",
+    "start": "DEBUG=1 MUX_DEV_MODE=true ts-node src/main.ts start",
     "clean": "rm -rf dist",
-    "prebuild": "npm run clean && tsc && cp package.json LICENSE dist",
+    "prebuild": "npm run clean && tsc --project tsconfig.build.json && cp package.json LICENSE dist",
     "build": "cd dist && npm pack --pack-destination=../"
   },
   "author": "",

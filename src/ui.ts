@@ -45,10 +45,7 @@ export class MuxUI {
     this.logger.info('cleaning up...');
     await Promise.all(this.processes.map(process => process.stop()));
 
-    this.logger.debug(`Sending SIGINT to my PID: ${process.pid}`);
-    process.kill(process.pid, "SIGINT");
-
-    this.logger.debug(`Shut down took ${performance.now() - startTime}ms`)
+    this.logger.info(`Shut down took ${Math.round(performance.now() - startTime)}ms`)
   }
 
   public async start(): Promise<void> {

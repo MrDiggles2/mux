@@ -1,17 +1,20 @@
 {
   "compilerOptions": {
-    "baseUrl": "src",
+    "baseUrl": ".",
     "target": "es6",
     "module": "CommonJS",
     "moduleResolution": "Node16",
     "esModuleInterop": true,
     "declaration": true,
     "preserveConstEnums": true,
-    "outDir": "./dist/",
-    "rootDir": "./src/"
+    "rootDir": "./"
   },
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "dist"
   ],
-  "include": ["src"]
+  "include": [
+    "src",
+    "mux.config.ts"
+  ]
 }
