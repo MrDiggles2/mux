@@ -7,8 +7,9 @@ npm install
 npm run mux start
 ```
 
-## Commands
+## Publishing
 
-### `mux start`
-
-Runs "install", then "start" for all registered processes
+```
+npm run build
+npm publish --access public
+```
