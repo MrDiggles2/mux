@@ -1,10 +1,5 @@
 #!/usr/bin/env node
 
-(async () => {
-  if (process.env.MUX_DEV_MODE) {
-    await import("ts-node/register");
-  }
-});
 
 import path from 'path';
 import { MuxUI } from "./ui";
@@ -35,6 +30,16 @@ usage:
 }
 
 async function runStart() {
+
+  // This package is used with a typescript config file so import ts-node/register
+  // to compile it on the fly.
+
+  await (async () => {
+    // Not needed if we're running this locally since we'll be used ts-node anyhow
+    if (!process.env.MUX_DEV_MODE) {
+      await import("ts-node/register");
+    }
+  })();
 
   // Manually require the config file so it can stay at the top level of the project
 

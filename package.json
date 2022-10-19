@@ -1,9 +1,7 @@
 {
   "name": "@mrdiggles2/mux",
-  "version": "0.0.2",
-  "bin": {
-    "mux": "main.js"
-  },
+  "version": "0.0.5",
+  "bin": "main.js",
   "scripts": {
     "start": "DEBUG=1 MUX_DEV_MODE=true ts-node src/main.ts start",
     "clean": "rm -rf dist",
