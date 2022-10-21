@@ -4,7 +4,7 @@ Process muxer written in TypeScript.
 
 Allows configuration of installation, runtime, and clean up of individual processes. Built in menu allows tailing, restarting, and rebuilding of processes within a single terminal session.
 
-Particularly useful for monorepo setups where 
+Particularly useful for monorepo setups where you have to run frontend, backend, and infrastructure locally.
 
 ## Getting started
 
