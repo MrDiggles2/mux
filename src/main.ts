@@ -1,6 +1,5 @@
 #!/usr/bin/env node
 
-
 import path from 'path';
 import { MuxUI } from "./ui";
 import { MuxProcess } from './process';
@@ -21,15 +20,7 @@ const logger: MuxLogger = {
   }
 }
 
-function runHelp() {
-  logger.log(`
-usage:
-
-  ./mux [start|help]
-`);
-}
-
-async function runStart() {
+async function main() {
 
   // This package is used with a typescript config file so import ts-node/register
   // to compile it on the fly.
@@ -102,29 +93,5 @@ async function runStart() {
   process.on('SIGINT', () => { console.log('SIGINT'); cleanExit(); });
   process.on('SIGTERM', () => { console.log('SIGTERM'); cleanExit(); });
 }
-
-
-const main = async () => {
-  const [ command ] = process.argv.slice(2);
-
-  switch (command) {
-    case 'start':
-      await runStart();
-    break;
-  
-    case 'attach':
-      logger.log('attach');
-    break;
-  
-    case 'stop':
-      logger.log('stop');
-    break;
-  
-    case 'help':
-    default:
-      runHelp();
-    break;
-  }
-};
 
 main();
