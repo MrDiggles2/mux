@@ -62,17 +62,15 @@ export class MuxUI {
     const startTime = performance.now();
 
     await Promise.all(this.processes.map(async process => {
-      this.logger.info(`${process.name}: installing`);
       const stream = process.getLogStream();
       stream.on('line', line => this.handleProcessLog(process, line));
       await process.install();
       stream.unwatch();
     }));
 
-    this.logger.debug(`Start up took ${performance.now() - startTime}ms`)
+    this.logger.info(`Installation took ${performance.now() - startTime}ms`)
 
     this.processes.forEach(process => {
-      this.logger.info(`${process.name}: Starting`);
       process.start();
     });
   }

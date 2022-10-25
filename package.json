@@ -3,7 +3,7 @@
   "version": "0.0.11",
   "bin": "main.js",
   "scripts": {
-    "start": "DEBUG=1 MUX_DEV_MODE=true ts-node src/main.ts start",
+    "start": "MUX_DEV_MODE=true ts-node src/main.ts start",
     "clean": "rm -rf dist",
     "prebuild": "npm run clean && tsc --project tsconfig.build.json && cp package.json LICENSE README.md dist",
     "build": "cd dist && npm pack --pack-destination=./",

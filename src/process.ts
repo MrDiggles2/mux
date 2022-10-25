@@ -50,6 +50,7 @@ export class MuxProcess {
   }
 
   public async install(): Promise<void> {
+    this.logger.info(`${this.name}: installing`);
     await this.runCommand(this.processConfig.install);
   }
 

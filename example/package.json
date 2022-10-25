@@ -1,0 +1,8 @@
+{
+  "scripts": {
+    "start": "node rn-printer.js"
+  },
+  "dependencies": {
+    "uuid": "^9.0.0"
+  }
+}
