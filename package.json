@@ -1,6 +1,6 @@
 {
   "name": "@mrdiggles2/mux",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "bin": "main.js",
   "scripts": {
     "start": "DEBUG=1 MUX_DEV_MODE=true ts-node src/main.ts start",
@@ -32,5 +32,13 @@
   "bugs": {
     "url": "https://github.com/MrDiggles2/mux/issues"
   },
-  "homepage": "https://github.com/MrDiggles2/mux#readme"
+  "homepage": "https://github.com/MrDiggles2/mux#readme",
+  "keywords": [
+    "mux",
+    "muxer",
+    "manager",
+    "process",
+    "typescript",
+    "monorepo"
+  ]
 }
