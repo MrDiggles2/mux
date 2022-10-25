@@ -6,6 +6,8 @@ Allows configuration of installation, runtime, and clean up of individual proces
 
 Particularly useful for monorepo setups where you have to run frontend, backend, and infrastructure locally.
 
+![usage](https://raw.githubusercontent.com/MrDiggles2/mux/main/docs/example.gif)
+
 ## Getting started
 
 1. Install package
