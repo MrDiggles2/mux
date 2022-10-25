@@ -38,14 +38,14 @@ export class MuxUI {
     this.initialState = this.buildStateGraph(processes);
   }
 
-  public async die() {
+  public async die(): Promise<void> {
     this.stopped = true;
     const startTime = performance.now();
 
     this.logger.info('cleaning up...');
     await Promise.all(this.processes.map(process => process.stop()));
 
-    this.logger.info(`Shut down took ${Math.round(performance.now() - startTime)}ms`)
+    this.logger.info(`Shut down took ${Math.round(performance.now() - startTime)}ms`);
   }
 
   public async start(): Promise<void> {
