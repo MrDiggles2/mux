@@ -1,14 +1,14 @@
 {
   "name": "@mrdiggles2/mux",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "bin": "main.js",
   "scripts": {
     "start": "DEBUG=1 MUX_DEV_MODE=true ts-node src/main.ts start",
     "clean": "rm -rf dist",
     "prebuild": "npm run clean && tsc --project tsconfig.build.json && cp package.json LICENSE README.md dist",
     "build": "cd dist && npm pack --pack-destination=./",
-    "prepublish": "npm run build",
-    "publish": "npm publish --access public ./dist/*.tgz"
+    "prepush": "npm run build",
+    "push": "npm publish --access public ./dist/*.tgz"
   },
   "author": "",
   "license": "ISC",
