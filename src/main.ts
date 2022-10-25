@@ -61,6 +61,9 @@ async function main() {
           terminal.once('key', resolve);
         });
       },
+      onQuit: async () => {
+        await cleanExit();
+      }
     },
     logger
   );

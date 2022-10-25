@@ -32,6 +32,7 @@ export class MuxUI {
     private uiHooks: {
       onChoicePrompt: (prompt: string, items: string[]) => Promise<number>,
       waitForNextKey: () => Promise<void>,
+      onQuit: () => Promise<void>,
     },
     private logger: MuxLogger,
   ) {
@@ -135,7 +136,7 @@ export class MuxUI {
     const quit: EndNode = {
       name: 'quit',
       getAction: () => ({
-        start: async () => await this.die(),
+        start: async () => this.uiHooks.onQuit(),
         stop: async () => {}
       })
     };
