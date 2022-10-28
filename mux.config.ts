@@ -28,6 +28,12 @@ const config: MuxConfig = {
         dir: './example',
         exec: 'npm start',
       }
+    },
+    {
+      name: 'sleeper',
+      run: {
+        exec: 'sleep 10',
+      }
     }
   ]
 };

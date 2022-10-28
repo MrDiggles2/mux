@@ -17,6 +17,12 @@ const logger: MuxLogger = {
     if (process.env.DEBUG) {
       terminal.brightMagenta('[DEBUG] ' + message + '\n');
     }
+  },
+  warn: (message: string) => {
+    terminal.brightYellow('[WARNING] ' + message + '\n');
+  },
+  error: (message: string) => {
+    terminal.brightRed('[ERROR] ' + message + '\n');
   }
 }
 
@@ -68,8 +74,6 @@ async function main() {
     logger
   );
 
-  ui.start();
-
   let stopped = false;
 
   const cleanExit = async () => {
@@ -78,7 +82,9 @@ async function main() {
     }
     stopped = true;
 
-    terminal.reset();
+    // To stop any terminal input
+    terminal.grabInput(false);
+
     await ui.die();
 
     logger.debug(`Exiting my process...`);
@@ -95,6 +101,13 @@ async function main() {
 
   process.on('SIGINT', () => { console.log('SIGINT'); cleanExit(); });
   process.on('SIGTERM', () => { console.log('SIGTERM'); cleanExit(); });
+
+  try {
+    await ui.start();
+  } catch (error) {
+    logger.error(error);
+    cleanExit();
+  }
 }
 
 main();

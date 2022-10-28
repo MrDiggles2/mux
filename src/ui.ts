@@ -61,12 +61,24 @@ export class MuxUI {
   private async initialize(): Promise<void> {
     const startTime = performance.now();
 
-    await Promise.all(this.processes.map(async process => {
+    const results = await Promise.all(this.processes.map(async process => {
       const stream = process.getLogStream();
       stream.on('line', line => this.handleProcessLog(process, line));
-      await process.install();
+      const exitCode = await process.install();
       stream.unwatch();
+      return { exitCode, process };
     }));
+
+    // Should stop if any install commands fail on start up
+
+    const failedProcesses = results.filter(({ exitCode }) => exitCode !== 0);
+    if (failedProcesses.length > 0) {
+      failedProcesses.forEach(({exitCode, process}) => {
+        this.logger.error(`process "${process.name}" failed to install. Exited with code ${exitCode}`);
+      });
+
+      throw new Error('Installation failed');
+    }
 
     this.logger.info(`Installation took ${performance.now() - startTime}ms`)
 

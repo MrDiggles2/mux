@@ -12,7 +12,7 @@ export class MuxProcess {
 
   private children: ChildProcess[] = [];
   private logPath?: string;
-  private startPromise?: Promise<void>;
+  private startPromise?: Promise<number>;
 
   constructor(
     private muxConfig: MuxConfig,
@@ -25,7 +25,9 @@ export class MuxProcess {
   public async stop(): Promise<void> {
     this.logger.info(`${this.name}: cleaning up`);
 
-    await this.runCommand(this.processConfig.stop);
+    if (this.processConfig.stop) {
+      await this.runCommand(this.processConfig.stop);
+    }
 
     this.logger.info(`${this.name}: shutting down`);
 
@@ -49,9 +51,12 @@ export class MuxProcess {
     fs.truncateSync(this.getLogPath(), 0);
   }
 
-  public async install(): Promise<void> {
+  public async install(): Promise<number> {
+    if (!this.processConfig.install) {
+      return Promise.resolve(0);
+    }
     this.logger.info(`${this.name}: installing`);
-    await this.runCommand(this.processConfig.install);
+    return await this.runCommand(this.processConfig.install);
   }
 
   public async start(): Promise<void> {
@@ -76,9 +81,10 @@ export class MuxProcess {
     return new Tail(this.getLogPath(), { nLines: lines, follow: true });
   }
 
-  protected async runCommand(command?: MuxCommand): Promise<void> {
+  protected async runCommand(command: MuxCommand): Promise<number> {
     if (!command) {
-      return Promise.resolve();
+      this.logger.warn('No command passed. Exiting with code 0');
+      return Promise.resolve(0);
     }
 
     const {
@@ -91,8 +97,8 @@ export class MuxProcess {
 
     const logFile = this.getLogPath();
 
-    let resolver: () => void;
-    const promise = new Promise<void>(resolve => {
+    let resolver: (code: number) => void;
+    const promise = new Promise<number>(resolve => {
       resolver = resolve
     });
 
@@ -120,12 +126,12 @@ export class MuxProcess {
 
     child.on('exit', (code) => {
       fs.appendFileSync(logFile, `exited with code ${code}`);
-      resolver();
+      resolver(code);
     })
     
     child.on('close', (code) => {
       fs.appendFileSync(logFile, `exited with code ${code}`);
-      resolver();
+      resolver(code);
     });
 
     this.children.push(child);
