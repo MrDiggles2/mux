@@ -163,7 +163,11 @@ export class MuxUI {
           this.logger.info(`Stopping all processes...`);
           await Promise.all(this.processes.map(process => process.stop()));
 
-          await this.initialize();
+          try {
+            await this.initialize();
+          } catch (e) {
+            this.logger.error(`Encountered error while rebuilding: ${e}`);
+          }
         },
         stop: async () => {}
       }),

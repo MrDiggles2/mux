@@ -1,6 +1,6 @@
 {
   "name": "@mrdiggles2/mux",
-  "version": "0.0.13",
+  "version": "0.0.14",
   "bin": "main.js",
   "scripts": {
     "start": "MUX_DEV_MODE=true ts-node src/main.ts start",
