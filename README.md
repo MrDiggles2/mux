@@ -91,10 +91,12 @@ const config: MuxConfig = {
     {
       name: 'docker-services',
       install: {
-        exec: `${dcBin} up -d --remove-orphans --wait`
+        exec: `${dcBin} up --build -d --remove-orphans --wait`
       },
       run: {
-        exec: `${dcBin} logs -f`
+        // Run `up` here again to smoothly support restarts. Effectively a no-op
+        // if the containers are already running
+        exec: `${dcBin} up -d --remove-orphans --wait && ${dcBin} logs -f`
       },
       stop: {
         exec: `${dcBin} down`
