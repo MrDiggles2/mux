@@ -47,11 +47,12 @@ export class MuxProcess {
     if (this.startPromise) {
       await this.startPromise;
     }
-
-    fs.truncateSync(this.getLogPath(), 0);
   }
 
   public async install(): Promise<number> {
+    this.logger.debug(`${this.name}: truncating log file at ${this.getLogPath()}`);
+    fs.truncateSync(this.getLogPath(), 0);
+
     if (!this.processConfig.install) {
       return Promise.resolve(0);
     }
