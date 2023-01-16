@@ -18,7 +18,7 @@ npm install @mrdiggles2/mux
 
 2. Create a `mux.config.ts` at the root level of your project. Sample:
 
-```
+```typescript
 import { MuxConfig } from '@mrdiggles2/mux/config';
 
 const config: MuxConfig = {
@@ -47,7 +47,7 @@ npx mux
 
 Each process in `mux.config.ts` can be configured:
 
-```
+```typescript
 ...
 {
   name: 'YOUR PROCESS NAME HERE',
@@ -55,13 +55,12 @@ Each process in `mux.config.ts` can be configured:
   install?: MuxCommand,
   cleanup?: MuxCommand,
 
-},
-...
+}
 ```
 
 Where `MuxCommand` takes the form:
 
-```
+```typescript
 {
     exec: <Command to run in a separate process>;
     dir?: <Path to run `exec` from. Appended to provided `rootDir` in mux.config.ts>
@@ -73,7 +72,7 @@ Where `MuxCommand` takes the form:
 
 Since `mux.config.ts` is a TypeScript file, you can also add dynamic configuration. Here is a more complete sample:
 
-```
+```typescript
 import path from "path";
 import { MuxConfig } from '@mrdiggles2/mux/config';
 
