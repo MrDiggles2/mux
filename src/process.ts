@@ -1,16 +1,14 @@
-import { ChildProcess, spawn } from "child_process";
 import path from "path";
 import fs from 'fs';
 import { Tail } from "tail";
 import treeKill from "tree-kill";
 import { MuxCommand, MuxProcessConfig, MuxLogger, MuxConfig } from "./config";
-export namespace Mux {
-  export const hello = 'foo';
-}
+import { IPty, spawn } from 'node-pty';
+
 export class MuxProcess {
   public name: string;
 
-  private children: ChildProcess[] = [];
+  private children: IPty[] = [];
   private logPath?: string;
   private startPromise?: Promise<number>;
 
@@ -66,7 +64,7 @@ export class MuxProcess {
     await this.startPromise;
   }
 
-  private getLogPath(): string {
+  public getLogPath(): string {
     if (!this.logPath) {
       const logDir = path.join(this.muxConfig.rootDir, this.muxConfig.logPath);
       fs.mkdirSync(logDir, { recursive: true });
@@ -104,35 +102,25 @@ export class MuxProcess {
     });
 
     const bin = "sh";
-    const args = ['-c', `'cd ${cwd} && ${exec}'`];
+    const args = ['-c', `cd ${cwd} && ${exec}`];
 
     this.logger.info(`${this.name}: Executing "${bin} ${args.join(' ')}"`);
     this.logger.debug(`${this.name}: Environtment variables: ${JSON.stringify(env)}`)
 
     const child = spawn(bin, args, {
-      shell: true,
       env: {
         ...process.env,
         ...env
       },
     });
 
-    child.stdout.on('data', (data: Buffer) => {
-      fs.appendFileSync(logFile, data);
-    });
-    
-    child.stderr.on('data', (data: Buffer) => {
+    child.onData((data: string) => {
       fs.appendFileSync(logFile, data);
     });
 
-    child.on('exit', (code) => {
-      fs.appendFileSync(logFile, `exited with code ${code}`);
-      resolver(code);
-    })
-    
-    child.on('close', (code) => {
-      fs.appendFileSync(logFile, `exited with code ${code}`);
-      resolver(code);
+    child.onExit(({ exitCode }) => {
+      fs.appendFileSync(logFile, `exited with code ${exitCode}`);
+      resolver(exitCode);
     });
 
     this.children.push(child);

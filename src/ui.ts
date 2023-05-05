@@ -74,7 +74,7 @@ export class MuxUI {
     const failedProcesses = results.filter(({ exitCode }) => exitCode !== 0);
     if (failedProcesses.length > 0) {
       failedProcesses.forEach(({exitCode, process}) => {
-        this.logger.error(`process "${process.name}" failed to install. Exited with code ${exitCode}`);
+        this.logger.error(`process "${process.name}" failed to install (exit code ${exitCode}).\nSee logs for more details: ${process.getLogPath()}`);
       });
 
       throw new Error('Installation failed');

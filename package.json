@@ -1,6 +1,6 @@
 {
   "name": "@mrdiggles2/mux",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "bin": "main.js",
   "scripts": {
     "start": "MUX_DEV_MODE=true ts-node src/main.ts start",
@@ -14,6 +14,7 @@
   "license": "MIT",
   "dependencies": {
     "chalk": "^4.1.0",
+    "node-pty": "^0.10.1",
     "tail": "^2.2.6",
     "terminal-kit": "^3.0.0",
     "tree-kill": "^1.2.2",
