@@ -94,8 +94,6 @@ export class MuxProcess {
 
     const cwd = path.join(this.muxConfig.rootDir, dir);
 
-    const logFile = this.getLogPath();
-
     let resolver: (code: number) => void;
     const promise = new Promise<number>(resolve => {
       resolver = resolve
@@ -114,13 +112,25 @@ export class MuxProcess {
       },
     });
 
+    const stream = fs.createWriteStream(this.getLogPath(), { flags: 'a' });
+
     child.onData((data: string) => {
-      fs.appendFileSync(logFile, data);
+      stream.write(data, (error) => {
+        if (error) {
+          this.logger.error(`${this.name}: Error while writing to log file ${error}`);
+        }
+      });
     });
 
     child.onExit(({ exitCode }) => {
-      fs.appendFileSync(logFile, `exited with code ${exitCode}`);
-      resolver(exitCode);
+      stream.write(`exited with code ${exitCode}`, (error) => {
+        if (error) {
+          this.logger.error(`${this.name}: Error while writing to log file ${error}`);
+        }
+        stream.close(() => {
+          resolver(exitCode);
+        });
+      });
     });
 
     this.children.push(child);
